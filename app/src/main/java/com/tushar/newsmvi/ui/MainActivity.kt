@@ -1,12 +1,14 @@
 package com.tushar.newsmvi.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.tushar.newsmvi.R
 import com.tushar.newsmvi.util.DataState
+import com.tushar.newsmvi.util.Tools
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), DataStateListener {
@@ -16,10 +18,16 @@ class MainActivity : AppCompatActivity(), DataStateListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        initToolbar()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         showMainFragment()
+    }
+
+    private fun initToolbar() {
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.grey_80))
+        setSupportActionBar(toolbar)
+        Tools.setSystemBarColor(this, R.color.grey_5)
+        Tools.setSystemBarLight(this)
     }
 
     private fun showMainFragment() {

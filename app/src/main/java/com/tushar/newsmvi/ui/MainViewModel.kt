@@ -49,8 +49,6 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getCurrentViewStateOrNew(): MainViewState {
-        return viewState.value?.let {
-            it
-        }?: MainViewState()
+        return viewState.value ?: MainViewState()
     }
 }
