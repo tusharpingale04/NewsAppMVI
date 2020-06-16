@@ -14,7 +14,7 @@ import com.tushar.newsmvi.util.DateTimeUtils
 import kotlinx.android.synthetic.main.row_news_light.view.*
 import java.text.DateFormat
 
-class MainRecyclerAdapter(private val interaction: Interaction? = null) :
+class MainRecyclerAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
@@ -29,7 +29,11 @@ class MainRecyclerAdapter(private val interaction: Interaction? = null) :
 
     }
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    private var interaction: Interaction? = null
 
+    fun setInteraction(interaction: Interaction){
+        this.interaction = interaction
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 

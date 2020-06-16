@@ -5,24 +5,21 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.tushar.newsmvi.R
 import com.tushar.newsmvi.util.DataState
 import com.tushar.newsmvi.util.Tools
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), DataStateListener {
-
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         showMainFragment()
     }
-
     private fun initToolbar() {
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.grey_80))
         setSupportActionBar(toolbar)
