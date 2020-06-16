@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.tushar.newsmvi.R
 import com.tushar.newsmvi.model.Article
 import com.tushar.newsmvi.util.DateTimeUtils
 import kotlinx.android.synthetic.main.row_news_light.view.*
 import java.text.DateFormat
+import javax.inject.Inject
 
-class MainRecyclerAdapter :
+class MainRecyclerAdapter
+    @Inject constructor(private val requestManager: RequestManager):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
@@ -43,7 +46,8 @@ class MainRecyclerAdapter :
                 parent,
                 false
             ),
-            interaction
+            interaction,
+            requestManager
         )
     }
 
@@ -66,7 +70,8 @@ class MainRecyclerAdapter :
     class NewsViewHolder
     constructor(
         itemView: View,
-        private val interaction: Interaction?
+        private val interaction: Interaction?,
+        private val requestManager: RequestManager
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Article) = with(itemView) {
@@ -79,8 +84,9 @@ class MainRecyclerAdapter :
             itemView.date.text = item.publishedAt
             itemView.date.text = DateFormat.getDateInstance(DateFormat.FULL).format(DateTimeUtils.getFormattedDate(item.publishedAt))
 
-            Glide.with(itemView.context)
+            requestManager
                 .load(item.urlToImage)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(itemView.image)
         }
     }

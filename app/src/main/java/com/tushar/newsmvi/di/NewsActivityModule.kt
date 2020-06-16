@@ -1,5 +1,6 @@
 package com.tushar.newsmvi.di
 
+import com.bumptech.glide.RequestManager
 import com.tushar.newsmvi.ui.MainRecyclerAdapter
 import com.tushar.newsmvi.util.TopSpacingItemDecoration
 import dagger.Module
@@ -13,8 +14,8 @@ object NewsActivityModule {
 
     @NewsScope
     @Provides
-    fun provideMainAdapter() : MainRecyclerAdapter{
-        return MainRecyclerAdapter()
+    fun provideMainAdapter(requestManager: RequestManager) : MainRecyclerAdapter{
+        return MainRecyclerAdapter(requestManager)
     }
 
     //Added in news scope only for testing
