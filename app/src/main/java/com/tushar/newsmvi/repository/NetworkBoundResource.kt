@@ -16,20 +16,18 @@ abstract class NetworkBoundResource<ResponseObject, ViewStateType> {
     init {
         result.value = DataState.loading(true)
 
-
         GlobalScope.launch(IO){
             withContext(Main){
                 val apiResponse = createCall()
                 result.addSource(apiResponse) { response ->
                     result.removeSource(apiResponse)
-
                     handleNetworkCall(response)
                 }
             }
         }
     }
 
-    fun handleNetworkCall(response: GenericApiResponse<ResponseObject>){
+    private fun handleNetworkCall(response: GenericApiResponse<ResponseObject>){
 
         when(response){
             is ApiSuccessResponse ->{
@@ -46,7 +44,7 @@ abstract class NetworkBoundResource<ResponseObject, ViewStateType> {
         }
     }
 
-    fun onReturnError(message: String){
+    private fun onReturnError(message: String){
         result.value = DataState.error(message)
     }
 

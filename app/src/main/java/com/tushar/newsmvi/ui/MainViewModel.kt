@@ -1,10 +1,10 @@
 package com.tushar.newsmvi.ui
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.tushar.newsmvi.model.Article
 import com.tushar.newsmvi.model.NewsModel
 import com.tushar.newsmvi.repository.Repository
 import com.tushar.newsmvi.ui.state.MainStateEvent
@@ -12,7 +12,7 @@ import com.tushar.newsmvi.ui.state.MainViewState
 import com.tushar.newsmvi.util.AbsentLiveData
 import com.tushar.newsmvi.util.DataState
 
-class MainViewModel : ViewModel() {
+class MainViewModel @ViewModelInject constructor(private val repository: Repository) : ViewModel() {
 
     private val _viewState: MutableLiveData<MainViewState> = MutableLiveData()
     val viewState: LiveData<MainViewState>
@@ -30,7 +30,7 @@ class MainViewModel : ViewModel() {
     private fun handleStateEvent(stateEvent: MainStateEvent): LiveData<DataState<MainViewState>> {
         return when(stateEvent){
             is MainStateEvent.FetchMovies ->{
-                Repository.getBlogPosts()
+                repository.getBlogPosts()
             }
             is MainStateEvent.None ->{
                 AbsentLiveData.create()
@@ -49,8 +49,6 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getCurrentViewStateOrNew(): MainViewState {
-        return viewState.value?.let {
-            it
-        }?: MainViewState()
+        return viewState.value ?: MainViewState()
     }
 }

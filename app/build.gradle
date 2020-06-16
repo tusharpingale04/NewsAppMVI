@@ -6,12 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.tushar.newsmvi"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,7 +23,22 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "API_KEY", NEWS_API_KEY
+            buildConfigField 'String', "BASE_URL", '"https://newsapi.org/"'
         }
+        debug{
+            buildConfigField 'String', "API_KEY", NEWS_API_KEY
+            buildConfigField 'String', "BASE_URL", '"https://newsapi.org/"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
@@ -29,26 +46,27 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
     // -- Retrofit2
-    def retrofit2_version = "2.6.0"
+    def retrofit2_version = "2.7.2"
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
 
     // -- Lifecycle Components (ViewModel, LiveData and ReactiveStreams)
-    def lifecycle_version = "2.2.0-rc03"
+    def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     // -- Coroutines
-    def coroutines_version = "1.2.1"
+    def coroutines_version = "1.3.6"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
@@ -56,15 +74,31 @@ dependencies {
     def recyclerview_version = "1.1.0"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
 
-    def material_version = "1.2.0-alpha02"
+    def material_version = "1.3.0-alpha01"
     implementation "com.google.android.material:material:$material_version"
 
     //glide
-    def glide_version = "4.9.0"
+    def glide_version = "4.11.0"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     // Leak Canary (detecting memory leaks)
     def leak_canary_version = "2.0-alpha-3"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+
+    //Dagger Hilt
+    def dagger_version = "2.28-alpha"
+    implementation "com.google.dagger:hilt-android:$dagger_version"
+    kapt "com.google.dagger:hilt-android-compiler:$dagger_version"
+
+    //Dagger ViewModel
+    def view_model_version = "1.0.0-alpha01"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$view_model_version"
+    kapt "androidx.hilt:hilt-compiler:$view_model_version"
+
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
+
+    implementation 'androidx.browser:browser:1.2.0'
+
+
 }

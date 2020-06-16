@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tushar.newsmvi.R
 import com.tushar.newsmvi.model.Article
-import kotlinx.android.synthetic.main.row_news.view.*
+import com.tushar.newsmvi.util.DateTimeUtils
+import kotlinx.android.synthetic.main.row_news_light.view.*
+import java.text.DateFormat
 
-class MainRecyclerAdapter(private val interaction: Interaction? = null) :
+class MainRecyclerAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
@@ -27,13 +29,17 @@ class MainRecyclerAdapter(private val interaction: Interaction? = null) :
 
     }
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    private var interaction: Interaction? = null
 
+    fun setInteraction(interaction: Interaction){
+        this.interaction = interaction
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return NewsViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.row_news,
+                R.layout.row_news_light,
                 parent,
                 false
             ),
@@ -68,13 +74,14 @@ class MainRecyclerAdapter(private val interaction: Interaction? = null) :
                 interaction?.onItemSelected(adapterPosition, item)
             }
 
-            itemView.tvTitle.text = item.title
-            itemView.tvAuthor.text = item.author
-            itemView.tvTime.text = item.publishedAt
+            itemView.title.text = item.title
+            itemView.subtitle.text = item.author
+            itemView.date.text = item.publishedAt
+            itemView.date.text = DateFormat.getDateInstance(DateFormat.FULL).format(DateTimeUtils.getFormattedDate(item.publishedAt))
 
             Glide.with(itemView.context)
                 .load(item.urlToImage)
-                .into(itemView.ivHeader)
+                .into(itemView.image)
         }
     }
 

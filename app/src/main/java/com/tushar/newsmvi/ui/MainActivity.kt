@@ -1,25 +1,30 @@
 package com.tushar.newsmvi.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.tushar.newsmvi.R
 import com.tushar.newsmvi.util.DataState
+import com.tushar.newsmvi.util.Tools
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), DataStateListener {
-
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
+        initToolbar()
         showMainFragment()
+    }
+    private fun initToolbar() {
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.grey_80))
+        setSupportActionBar(toolbar)
+        Tools.setSystemBarColor(this, R.color.grey_5)
+        Tools.setSystemBarLight(this)
     }
 
     private fun showMainFragment() {

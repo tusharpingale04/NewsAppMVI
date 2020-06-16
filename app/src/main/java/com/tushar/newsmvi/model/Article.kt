@@ -32,4 +32,16 @@ data class Article(
 
         return true
     }
+
+    override fun hashCode(): Int {
+        var result = author.hashCode()
+        result = 31 * result + content.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + publishedAt.hashCode()
+        result = 31 * result + source.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + url.hashCode()
+        result = 31 * result + urlToImage.hashCode()
+        return result
+    }
 }
