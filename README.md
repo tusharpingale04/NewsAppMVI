@@ -16,4 +16,4 @@ News App 📰 is an simple application based on event based MVI architectural pa
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 
 # Package Structure
-<img width="373" alt="Screenshot 2020-06-16 at 2 47 47 PM" src="https://user-images.githubusercontent.com/42339771/84756470-76452700-afe0-11ea-900c-e983227132d8.png">
+![Screenshot 2020-06-16 at 2 47 47 PM-min](https://user-images.githubusercontent.com/42339771/84756693-c3c19400-afe0-11ea-9bd0-823f4a8d0c70.png)
