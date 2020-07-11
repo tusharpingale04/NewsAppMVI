@@ -113,5 +113,9 @@ class MainFragment : Fragment(),
 
     }
 
+    private fun getInt() = 2+3
+
+    private fun getIntTemp() = 2+3
+
 
 }

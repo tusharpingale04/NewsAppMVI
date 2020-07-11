@@ -35,8 +35,6 @@ class MainViewModel @ViewModelInject constructor(private val repository: Reposit
             is MainStateEvent.None ->{
                 AbsentLiveData.create()
             }
-
-            
         }
     }
 
@@ -53,4 +51,9 @@ class MainViewModel @ViewModelInject constructor(private val repository: Reposit
     private fun getCurrentViewStateOrNew(): MainViewState {
         return viewState.value ?: MainViewState()
     }
+
+    private fun getInt() = 2+3
+
+    private fun getString() = "Tushar"
+
 }
